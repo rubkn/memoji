@@ -1,6 +1,4 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
 import EMOJIS from "./constants/emojis";
 import { v4 as uuidv4 } from "uuid";
@@ -11,8 +9,16 @@ type EmojiCard = {
 };
 
 function App() {
-  const [emojis, setEmojis] = useState<EmojiCard[]>([]);
+  const [cards, setCards] = useState<EmojiCard[]>([]);
   const [turns, setTurns] = useState<number>(0);
+  const [choiceOne, setChoiceOne] = useState<EmojiCard | null>(null);
+  const [choiceTwo, setChoiceTwo] = useState<EmojiCard | null>(null);
+
+  const doCardsMatch =
+    choiceOne?.emoji.codePointAt(0) === choiceTwo?.emoji.codePointAt(0);
+
+  console.log(cards, turns);
+  console.log("match??", doCardsMatch);
 
   const shuffle = () => {
     const emojiCard: EmojiCard[] = EMOJIS.map((emoji) => ({
@@ -20,37 +26,64 @@ function App() {
       emoji: emoji,
     }));
 
-    const shuffled = [...emojiCard, ...emojiCard].sort(
-      () => Math.random() - 0.5
-    );
+    const shuffled = [...emojiCard, ...emojiCard]
+      .sort(() => Math.random() - 0.5)
+      .map((card, index) => ({ ...card, id: `${card.id}-${index}` }));
 
-    setEmojis(shuffled);
+    setCards(shuffled);
     setTurns(0);
   };
 
-  console.log(emojis, turns);
+  const handleChoice = (card: EmojiCard) => {
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+  };
+
+  useEffect(() => {
+    console.log("choice 1", choiceOne);
+    console.log("choice 2", choiceTwo);
+    if (!(choiceOne && choiceTwo)) return;
+
+    if (doCardsMatch) {
+      setCards((prev) => {
+        return prev.map((card) => {
+          if (card.emoji.codePointAt(0) !== choiceOne.emoji.codePointAt(0)) {
+            return card;
+          }
+
+          return { ...card, matched: true };
+        });
+      });
+    } else {
+      resetTurn();
+    }
+  }, [choiceOne, choiceTwo]);
+
+  const resetTurn = () => {
+    if (!doCardsMatch) return;
+
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns((prev) => prev + 1);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={shuffle}>count</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <main>
+      <section className="header">
+        <h1>Memoji</h1>
+        <button onClick={shuffle}></button>
+      </section>
+      <section className="grid">
+        {cards.map((card) => (
+          <div
+            key={card.id}
+            className="card"
+            onClick={() => handleChoice(card)}
+          >
+            {card.emoji}
+          </div>
+        ))}
+      </section>
+    </main>
   );
 }
 
