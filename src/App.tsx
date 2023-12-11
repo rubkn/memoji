@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
 import "./App.css";
-import EMOJIS from "./constants/emojis";
-import { v4 as uuidv4 } from "uuid";
 
-type EmojiCard = {
-  id: string;
-  emoji: string;
-};
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { EmojiCard } from "./lib/types";
+import EMOJIS from "./constants/emojis";
+import Card from "./components/Card";
 
 function App() {
   const [cards, setCards] = useState<EmojiCard[]>([]);
@@ -17,8 +15,8 @@ function App() {
   const doCardsMatch =
     choiceOne?.emoji.codePointAt(0) === choiceTwo?.emoji.codePointAt(0);
 
-  console.log(cards, turns);
-  console.log("match??", doCardsMatch);
+  /* console.log(cards, turns);
+  console.log("match??", doCardsMatch); */
 
   const shuffle = () => {
     const emojiCard: EmojiCard[] = EMOJIS.map((emoji) => ({
@@ -35,12 +33,13 @@ function App() {
   };
 
   const handleChoice = (card: EmojiCard) => {
+    console.log("card", card.id);
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
   useEffect(() => {
-    console.log("choice 1", choiceOne);
-    console.log("choice 2", choiceTwo);
+    /* console.log("choice 1", choiceOne);
+    console.log("choice 2", choiceTwo); */
     if (!(choiceOne && choiceTwo)) return;
 
     if (doCardsMatch) {
@@ -70,17 +69,11 @@ function App() {
     <main>
       <section className="header">
         <h1>Memoji</h1>
-        <button onClick={shuffle}></button>
+        <button onClick={shuffle}>shuffle</button>
       </section>
-      <section className="grid">
+      <section className="card__grid">
         {cards.map((card) => (
-          <div
-            key={card.id}
-            className="card"
-            onClick={() => handleChoice(card)}
-          >
-            {card.emoji}
-          </div>
+          <Card key={card.id} card={card} handler={handleChoice} />
         ))}
       </section>
     </main>

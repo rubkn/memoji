@@ -1,0 +1,18 @@
+.card {
+  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 25%;
+  border: 0.25rem solid darkgray;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: darkgray;
+  }
+}
+
+.card__front {
+}
+
+.card__reveal {
+}
