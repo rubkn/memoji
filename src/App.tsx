@@ -79,11 +79,9 @@ function App() {
             handler={handleChoice}
           />
         ))}
-        turns
-        {turns}
+        {`turns: ${turns}`}
         <br />
-        score
-        {score}
+        {`score: ${score}`}
       </section>
     </main>
   );
