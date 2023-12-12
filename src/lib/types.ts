@@ -1,4 +1,5 @@
 export type EmojiCard = {
-  id: string;
+  id: number;
   emoji: string;
+  matched: boolean;
 };
