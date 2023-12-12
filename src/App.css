@@ -11,7 +11,15 @@ main {
   gap: 4rem;
 }
 
-.card__grid {
+.header h1 {
+  font-size: 3rem;
+}
+
+.header button {
+  font-size: 1rem;
+}
+
+.grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;

@@ -3,19 +3,23 @@ import { EmojiCard } from "../lib/types";
 
 const Card = ({
   card,
+  flipped,
   handler,
 }: {
   card: EmojiCard;
+  flipped: boolean;
   handler: (card: EmojiCard) => void;
 }) => {
   return (
     <button
       className="card"
-      onClick={(event) => handler(card, event)}
-      data-id={card.id}
+      onClick={() => handler(card)}
+      disabled={card.matched}
     >
-      <div className="card__front">test</div>
-      <div className="card__reveal">{card.emoji}</div>
+      <div className={`${flipped && "card__flipped"}`}>
+        <div className="card__front" />
+        <div className="card__reveal">{card.emoji}</div>
+      </div>
     </button>
   );
 };

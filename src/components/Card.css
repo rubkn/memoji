@@ -1,18 +1,36 @@
 .card {
-  font-size: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  font-size: 2rem;
   padding: 1rem;
-  border-radius: 25%;
-  border: 0.25rem solid darkgray;
+  border-radius: 1rem;
+  border: 0.25rem solid black;
+  background-color: var(--dark);
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 
   &:hover {
-    background-color: darkgray;
+    background-color: black;
+  }
+
+  &:disabled {
+    cursor: auto;
   }
 }
 
-.card__front {
+.card .card__reveal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  transform: rotateY(90deg);
+  transition: all 0.3s ease-in-out;
 }
 
-.card__reveal {
+.card__flipped .card__reveal {
+  transform: rotateY(0deg);
 }
