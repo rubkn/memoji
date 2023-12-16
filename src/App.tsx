@@ -67,7 +67,7 @@ function App() {
   return (
     <main>
       <section className="header">
-        <h1>memoji</h1>
+        <h1 className="text-3xl font-bold underline">memoji</h1>
         <button onClick={shuffle}>new game</button>
       </section>
       <section className="grid">
