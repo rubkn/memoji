@@ -1,5 +1,3 @@
-import "./App.css";
-
 import { useEffect, useState } from "react";
 import { EmojiCard } from "./lib/types";
 import EMOJIS from "./constants/emojis";
@@ -12,12 +10,6 @@ function App() {
   const [choiceOne, setChoiceOne] = useState<EmojiCard | null>(null);
   const [choiceTwo, setChoiceTwo] = useState<EmojiCard | null>(null);
 
-  /* const doCardsMatch =
-    choiceOne?.emoji.codePointAt(0) === choiceTwo?.emoji.codePointAt(0); */
-
-  /* console.log(cards, turns); */
-  /* console.log("match??", doCardsMatch); */
-
   const shuffle = () => {
     const shuffled = [...EMOJIS, ...EMOJIS]
       .sort(() => Math.random() - 0.5)
@@ -29,13 +21,8 @@ function App() {
   };
 
   const handleChoice = (card: EmojiCard) => {
-    /* console.log("card.id", card.id); */
-    /* console.log("card", card); */
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
-
-  /* console.log("1", choiceOne);
-  console.log("2", choiceTwo); */
 
   useEffect(() => {
     if (choiceOne && choiceTwo) {
@@ -65,12 +52,23 @@ function App() {
   };
 
   return (
-    <main>
-      <section className="header">
-        <h1 className="text-3xl font-bold underline">memoji</h1>
-        <button onClick={shuffle}>new game</button>
-      </section>
-      <section className="grid">
+    <>
+      <header className="flex flex-col items-center justify-center space-y-4 py-12 md:p-6 lg:p-8">
+        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+          Welcome to Memoji
+        </h1>
+        <p className="mx-auto max-w-[700px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          Test your memory and have fun! <br />
+          Click 'New Game' to start.
+        </p>
+        <button
+          onClick={shuffle}
+          className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+        >
+          New Game
+        </button>
+      </header>
+      <main className="grid grid-cols-4 gap-4">
         {cards.map((card) => (
           <Card
             key={card.id}
@@ -79,11 +77,11 @@ function App() {
             handler={handleChoice}
           />
         ))}
-        {`turns: ${turns}`}
+        {/* {`turns: ${turns}`}
         <br />
-        {`score: ${score}`}
-      </section>
-    </main>
+        {`score: ${score}`} */}
+      </main>
+    </>
   );
 }
 
