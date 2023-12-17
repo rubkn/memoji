@@ -5,8 +5,8 @@ import Card from "./components/Card";
 
 function App() {
   const [cards, setCards] = useState<EmojiCard[]>([]);
-  const [turns, setTurns] = useState<number>(0);
-  const [score, setScore] = useState<number>(0);
+  /* const [turns, setTurns] = useState<number>(0);
+  const [score, setScore] = useState<number>(0); */
   const [choiceOne, setChoiceOne] = useState<EmojiCard | null>(null);
   const [choiceTwo, setChoiceTwo] = useState<EmojiCard | null>(null);
 
@@ -16,8 +16,8 @@ function App() {
       .map((card) => ({ ...card, id: Math.random() }));
 
     setCards(shuffled);
-    setScore(0);
-    setTurns(0);
+    /* setScore(0);
+    setTurns(0); */
   };
 
   const handleChoice = (card: EmojiCard) => {
@@ -35,7 +35,7 @@ function App() {
           });
         });
 
-        setScore((prev) => prev + 1);
+        /* setScore((prev) => prev + 1); */
         resetTurn();
       } else {
         setTimeout(() => resetTurn(), 500);
@@ -48,7 +48,7 @@ function App() {
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
-    setTurns((prev) => prev + 1);
+    /* setTurns((prev) => prev + 1); */
   };
 
   return (
